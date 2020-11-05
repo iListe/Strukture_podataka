@@ -27,7 +27,7 @@ int main()
 	FILE* fp = NULL;
 	fp = fopen("studenti.txt", "r");
 	if (fp == NULL) {
-	printf("Greska u otvaranju datoteke!");
+		printf("Greska u otvaranju datoteke!");
 	}
 	fgets(buffer, 1024, fp);
 
@@ -54,7 +54,6 @@ int broji_retke(char* ime_dat)
 	if (fp == NULL)
 		printf("Greska u otvaranju datoteke!");
 
-	br++;
 	while ((znak = fgetc(fp)) != EOF)
 	{
 		if (znak == '\n')
