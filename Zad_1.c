@@ -2,130 +2,108 @@
 #include<stdio.h>
 #include<malloc.h>
 #include<string.h>
-#include<ctype.h>
 #define MAX 20
 
-typedef struct {
-	int bodovi;
+typedef struct _student{
 	char ime[MAX];
 	char prezime[MAX];
-	float prosjek;
+	int abs_bodovi;
+	float rel_bodovi;
 }student;
 
-int broji_retke(char* ime_dat);
-int citaj(char* ime_dat, student* s, int n);
-int prosjek(char* ime_dat, student* s, int n, int max);
-int ispis(char* ime_dat, student* s, int n);
+int retci();
+student* citajIzdat(student*, int );
+int ispis(student*, int);
+int max_bodovi(student* s, int);
+student* racunajRelativne(student*, int, int);
 
 int main()
 {
-	int n;
+	int broj_redaka,max;
+	broj_redaka = retci();
 	student* s;
-	int max = 0;
-	char buffer[1024];
-
-	FILE* fp = NULL;
-	fp = fopen("studenti.txt", "r");
-	if (fp == NULL) {
-		printf("Greska u otvaranju datoteke!");
-	}
-	fgets(buffer, 1024, fp);
-
-	n = broji_retke(buffer);
-
-	s = (student*)malloc(n * sizeof(student));
-
-	max = citaj(buffer, s, n);
-	prosjek(buffer, s, n, max);
-	ispis(buffer, s, n);
-
-	fclose(fp);
-
+	s=(student*)malloc(sizeof(student)*broj_redaka);
+	s=citajIzdat(s,broj_redaka);
+	max=max_bodovi(s,broj_redaka);
+	s=racunajRelativne(s,broj_redaka,max);
+	ispis(s,broj_redaka);
 	return 0;
 }
 
-int broji_retke(char* ime_dat)
+int retci()
 {
-	int znak = 0;
-	int br = 0;
-
 	FILE* fp = NULL;
+	int broj_redaka=0;
+	char* buffer;
+	buffer=(char*)malloc(1024*sizeof(char));
 	fp = fopen("studenti.txt", "r");
-	if (fp == NULL)
-		printf("Greska u otvaranju datoteke!");
-
-	while ((znak = fgetc(fp)) != EOF)
+	if (NULL==fp)
 	{
-		if (znak == '\n')
-			br++;
+		printf("Greska u otvaranju datoteke!");
+		return -1;
+	}
+
+	while (!feof(fp)))
+	{
+		fgets(buffer,1024,fp);
+		broj_redaka++;
 	}
 
 	fclose(fp);
-
-	return br;
+	return broj_redaka;
 }
 
-int citaj(char* ime_dat, student* s, int n)
+student* citajIzdat(student* s, int broj_redaka)
 {
-	int i, max;
-
 	FILE* fp = NULL;
+	int i;
 	fp = fopen("studenti.txt", "r");
-	if (fp == NULL)
+	{
+		if (fp == NULL)
 		printf("Greska u otvaranju datoteke!");
+		return s;
+	}
+	while(!feof(fp))
 
-	for (i = 0; i < n; i++) {
+	{
+		for (i = 0; i < broj_redaka; i++) {
 
-		fscanf(fp, "%d ", &s[i].bodovi);
+		fscanf(fp, "%d ", &s[i].abs_bodovi);
 		fscanf(fp, "%s ", s[i].ime);
 		fscanf(fp, "%s ", s[i].prezime);
 	}
-
-	max = s[0].bodovi;
-
-	for (i = 1; i < n; i++) {
-		if (s[i].bodovi > max)
-			max = s[i].bodovi;
 	}
+	return s;
+}
 
-	fclose(fp);
+int ispis(student* s, int broj_redaka)
+{
+	int i;
+	printf("Lista je prazna");
+	for(i=0; i<broj_redaka;i++)
+	{
+		printf(" %s %s %d %f\n",s[i].ime, s[i].prezime,s[i].aps_bodovi,s[i].rel_bofovi);
+	}
+	return 0;
+}
 
+int max_bodovi(student* s, int broj_redaka)
+{
+	int i,max;
+	max=s[0].abs_bodovi;
+	for(i=1;i<broj_redaka;i++)
+	{
+		if(s[i].aps_bodovi>max)
+			max=s[i].aps_bodovi;
+}
 	return max;
 }
-
-int prosjek(char* ime_dat, student* s, int n, int max)
+student* racunajRelativne(student* s,int broj_redaka, int max)
 {
 	int i;
-
-	FILE* fp = NULL;
-	fp = fopen("studenti.txt", "r");
-	if (fp == NULL)
-		printf("Greska u otvaranju datoteke!");
-
-	for (i = 0; i < n; i++)
-		s[i].prosjek = (float)s[i].bodovi / max * 100;
-
-	fclose(fp);
-
-	return 0;
-}
-
-int ispis(char* ime_dat, student* s, int n)
-{
-	int i;
-
-	FILE* fp = NULL;
-	fp = fopen("studenti.txt", "r");
-	if (fp == NULL)
-		printf("Greska u otvaranju datoteke!");
-
-	printf("\t\tIme\t\tPrezime\t\tBodovi\tProsjek\n\n");
-
-	for (i = 0; i < n; i++) {
-		printf("%15s\t\t%15s\t\t%2d\t%f\n", s[i].ime, s[i].prezime, s[i].bodovi, s[i].prosjek);
+	for(i=0;i<broj_redaka;i++)
+	{
+		s[i].rel_bodovi=(float)s[i].aps_bodovi/max *100;
 	}
-
-	fclose(fp);
-
-	return 0;
+	return s;
 }

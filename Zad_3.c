@@ -132,10 +132,9 @@ void DeletePrez(Position P)
 	scanf("%s", prez[MAX]);
 
 	while (P->Next != NULL && _strcmpi(P->Next->prezime, prez) != 0)
-	{
 		P = P->Next;
 		tmp = P->Next;
-	}
+	
 	if (tmp != NULL)
 	{
 		P->Next = tmp->Next;
