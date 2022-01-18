@@ -43,4 +43,4 @@ int PrintDescending(cityPos);
 int PrintLarger(cityPos, int);
 void PrintLine();
 
-int SearchCities(countryPos); #pragma once
+int SearchCities(countryPos); 

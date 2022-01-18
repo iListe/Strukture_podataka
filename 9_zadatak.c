@@ -1,10 +1,10 @@
-﻿#include <stdio.h>
+﻿_CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h> 
 #include <time.h> 
-
-struct _Tree;
+; struct _Tree;
 typedef struct _Tree* Node;
 typedef struct _Tree {
     int value;
@@ -83,7 +83,7 @@ int print_to_list(Node position, Position head) {
 
 int print_list_to_file(Position position, char* filename);
 int print_list_to_file(Position position, char* filename) {
-    FILE* file = fopen(filename, "a");
+    FILE* file = fopen_s(filename, "a");
 
     if (!file) {
         return 1;

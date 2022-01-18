@@ -1,10 +1,11 @@
+_CRT_SECURE_NO_WARNINGS
 #include "country.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 
-int InsertAfter(countryPos pos, countryPos newCountry)
+; int InsertAfter(countryPos pos, countryPos newCountry)
 {
     newCountry->next = pos->next;
     pos->next = newCountry;
