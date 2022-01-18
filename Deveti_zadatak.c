@@ -4,6 +4,7 @@
 #include <string.h>
 #include <limits.h> 
 #include <time.h> 
+
 ; struct _Tree;
 typedef struct _Tree* Node;
 typedef struct _Tree {
@@ -83,7 +84,7 @@ int print_to_list(Node position, Position head) {
 
 int print_list_to_file(Position position, char* filename);
 int print_list_to_file(Position position, char* filename) {
-    FILE* file = fopen_s(filename, "a");
+    FILE* file = fopen(filename, "a");
 
     if (!file) {
         return 1;
@@ -210,7 +211,6 @@ int fill_tree_random(Node root, int amount) {
     // seed
     srand(time(0));
     for (int i = 0; i < amount; i++) {
-      
         temp = create_node(rand() % 79 + 11);
         insert_node(root, temp);
     }
@@ -239,7 +239,6 @@ int main() {
 
     replace(root->right);
     print_in_order(root->right);
-
 
     return 0;
 }
